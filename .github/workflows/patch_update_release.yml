@@ -130,6 +130,7 @@ jobs:
       run: |
         rm -f successful_arches.txt
         cp -r upstream-runner/* .
+        git checkout -- releaseVersion
 
     - name: Create pull request to main
       uses: canonical/create-pull-request@main
@@ -144,5 +145,6 @@ jobs:
     - name: Create release branch
       if: steps.process-arches.outputs.successful_arches != ''
       run: |
+        cp upstrea-runner/releaseVersion .
         git checkout -b releases/${{ steps.get-tags.outputs.LATEST_TAG }}
         git push -u origin releases/${{ steps.get-tags.outputs.LATEST_TAG }}
